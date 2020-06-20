@@ -86,6 +86,7 @@ public class ChatRoomWindow extends Application {
         HBox contact = new HBox(3, writeTo, new Label(name));
         contact.setMinHeight(50);
         contact.setMinWidth(150);
+        contact.setPadding(new Insets(10));
         contact.setStyle("-fx-background-color: #f2bcf8");
         return contact;
     }
