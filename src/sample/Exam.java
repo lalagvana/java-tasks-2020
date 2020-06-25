@@ -2,9 +2,6 @@ package sample;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
 import java.util.Random;
 
 class PGMImage {

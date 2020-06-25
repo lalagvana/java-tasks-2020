@@ -1,9 +1,6 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -12,22 +9,10 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
 import javafx.geometry.Insets;
 
-import java.awt.Desktop;
-import javax.imageio.ImageIO;
-import javax.swing.text.Element;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 public class ExamTask2 extends Application {
     public static void main(String[] args) {
