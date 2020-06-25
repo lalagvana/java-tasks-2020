@@ -19,13 +19,11 @@ public class ExamTask2 extends Application {
         launch(args);
     }
 
-    private Button chooseImage;
     private ImageView showPNGImage;
-    private ImageView showPGMImage;
 
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
 
-        chooseImage = new Button("Select PNG image");
+        Button chooseImage = new Button("Select PNG image");
         final FileChooser fileChooser = new FileChooser();
         Label imgPath = new Label();
 
