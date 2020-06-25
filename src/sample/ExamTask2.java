@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -17,10 +19,12 @@ import javafx.geometry.Insets;
 
 import java.awt.Desktop;
 import javax.imageio.ImageIO;
-import javax.swing.text.html.ImageView;
+import javax.swing.text.Element;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +34,7 @@ public class ExamTask2 extends Application {
         launch(args);
     }
 
-    private Desktop desktop = Desktop.getDesktop();
     private Button chooseImage;
-    private Label fileName;
     private ImageView showPNGImage;
     private ImageView showPGMImage;
 
@@ -40,48 +42,42 @@ public class ExamTask2 extends Application {
 
         chooseImage = new Button("Select PNG image");
         final FileChooser fileChooser = new FileChooser();
-        TextArea textArea = new TextArea();
-        textArea.setMinHeight(70);
-        chooseImage.setOnAction(new EventHandler<ActionEvent>() {
+        Label imgPath = new Label();
 
-            @Override
-            public void handle(ActionEvent event) {
-                textArea.clear();
-                File file = fileChooser.showOpenDialog(stage);
-                if (file != null) {
-                    openFile(file);
-                    List<File> files = Arrays.asList(file);
-                    printLog(textArea, files);
+        VBox root = new VBox(imgPath, chooseImage);
+        root.setPadding(new Insets(10));
+        stage.setScene(new Scene(root, 400, 400));
+        stage.setTitle("Save PNG image as PGM");
+        stage.setResizable(false);
+        stage.show();
+
+        chooseImage.setOnAction(event -> {
+            File file = fileChooser.showOpenDialog(stage);
+            if (file != null) {
+                imgPath.setText(file.getAbsolutePath());
+                Image pic = new Image("file:" + file.getAbsolutePath());
+                showPNGImage = new ImageView(pic);
+                root.getChildren().addAll(showPNGImage);
+                try {
+                    convertPNGtoPGM(file.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
 
-        BufferedImage bufferedImage = ImageIO.read(new File("C:\\Users\\lalag\\Desktop\\smolcatt.png"));
-        ImageIO.write(bufferedImage, "pgm", new File("C:\\Users\\lalag\\Desktop\\smolcatt.png.pgm"));
-
-
-        VBox root = new VBox(textArea, chooseImage);//(chooseImage, fileName, showPNGImage, showPGMImage);
-        root.setPadding(new Insets(10));
-        stage.setScene(new Scene(root, 700, 700));
-        stage.setTitle("Save PNG image as PGM");
-        stage.setResizable(false);
-        stage.show();
     }
-        private void printLog(TextArea textArea, List<File> files) {
-            if (files == null || files.isEmpty()) {
-                return;
-            }
-            for (File file : files) {
-                textArea.appendText(file.getAbsolutePath() + "\n");
-            }
-        }
 
-        private void openFile(File file) {
-            try {
-                this.desktop.open(file);
-            } catch (IOException e) {
-                e.printStackTrace();
+    private void convertPNGtoPGM(String filename) throws IOException {
+        Image img = new Image("file:" + filename);
+        PixelReader pr = img.getPixelReader();
+        PGMImage imgPGM = new PGMImage((int) img.getWidth(),(int) img.getHeight());
+        for (int x = 0; x < (int) img.getWidth(); x++)
+            for (int y = 0; y < (int) img.getHeight(); y++) {
+                Color color = pr.getColor(x, y);
+                double brightness = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();
+                imgPGM.setPixel(y, x, (int) Math.round(brightness*255));
             }
-        }
-
+        imgPGM.saveTo(filename + ".pgm");
     }
+}
