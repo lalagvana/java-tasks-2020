@@ -23,7 +23,6 @@ public class ChatRoomWindow extends Application {
 
     private TextField messageInput;
     private Button sendButton;
-    private Button quitButton;
     private TextArea transcript;
 
     public void start(Stage stage) {
