@@ -9,10 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-
 public class Colors extends Application {
 
     public static void main(String[] args) {
@@ -95,19 +91,19 @@ public class Colors extends Application {
 
         //1 block - 1,2,3 images
         HBox firstToThird = new HBox(first, second, third);
-        firstToThird.setMargin(first, new Insets(6));
-        firstToThird.setMargin(second, new Insets(6));
-        firstToThird.setMargin(third, new Insets(6));
+        HBox.setMargin(first, new Insets(6));
+        HBox.setMargin(second, new Insets(6));
+        HBox.setMargin(third, new Insets(6));
 
         //3 block - 6,7 images
         HBox sixthSeventh = new HBox(sixth, seventh);
-        firstToThird.setMargin(sixth, new Insets(0));
-        firstToThird.setMargin(seventh, new Insets(0));
+        HBox.setMargin(sixth, new Insets(0));
+        HBox.setMargin(seventh, new Insets(0));
 
         //whole window
         VBox root = new VBox(8, firstToThird, fourth, fifth, sixthSeventh);
-        root.setMargin(fourth, new Insets(20));
-        root.setMargin(fifth, new Insets(20));
+        VBox.setMargin(fourth, new Insets(20));
+        VBox.setMargin(fifth, new Insets(20));
         stage.setScene(new Scene(root, 400, 650));
         stage.setTitle("Colors!");
         stage.setResizable(false);
