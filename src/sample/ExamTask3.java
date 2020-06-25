@@ -1,18 +1,21 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.scene.image.*;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,7 +28,7 @@ public class ExamTask3 extends Application {
 
     private ImageView showPNGImage;
 
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
 
         Button chooseImage = new Button("Select PGM image");
         final FileChooser fileChooser = new FileChooser();
@@ -57,19 +60,19 @@ public class ExamTask3 extends Application {
 
     private void convertPGMtoPNG(String filename) throws IOException {
         Scanner scanner = new Scanner(new FileInputStream(filename));
-        System.out.println(scanner.nextLine());
+        scanner.nextLine();
         int width = scanner.nextInt();
         int height = scanner.nextInt();
-        System.out.println(scanner.nextInt());
-   /*     int brightness;
-        WritableImage img = new WritableImage(width, height);
-        PixelWriter pw = img.getPixelWriter();
+        scanner.nextInt();
+        double brightness;
+        WritableImage wim = new WritableImage(width, height);
+        PixelWriter pw = wim.getPixelWriter();
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++) {
-                brightness = scanner.nextInt() / 255;
-                pw.setColor(x, y, Color.gray(brightness));
+                brightness = (double) scanner.nextInt()/255;
+                pw.setColor(y, x, Color.gray(brightness));
             }
-        assert false;
-        ImageIO.write((RenderedImage) img, "PNG", new File(filename + ".png"));*/
+        File fileA = new File(filename+".png");
+        ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", fileA);
     }
 }
