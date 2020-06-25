@@ -7,34 +7,34 @@ import java.util.Random;
 class PGMImage {
     private int[][] pixelColor;
 
-    public PGMImage(int width, int height) {
+    PGMImage(int width, int height) {
         this.pixelColor = new int[height][width];
     }
 
-    public void setPixel(int x, int y, int color) {
+    void setPixel(int x, int y, int color) {
         this.pixelColor[x][y] = color;
     }
 
-    public int getWidth() {
+    int getWidth() {
         return this.pixelColor[0].length;
     }
 
-    public int getHeight() {
+    int getHeight() {
         return this.pixelColor.length;
     }
 
-    public void saveTo(String filename) throws IOException {
+    void saveTo(String filename) throws IOException {
         FileWriter writer = new FileWriter(filename, false);
-        String text = "P2\n" + this.getWidth() + " " + this.getHeight() + "\n255\n";
+        StringBuilder text = new StringBuilder("P2\n" + this.getWidth() + " " + this.getHeight() + "\n255\n");
         for (int i = 0; i < this.getHeight(); i++) {
             for (int j = 0; j < this.getWidth(); j++) {
                 if (i == this.getHeight() - 1 && j == this.getWidth() - 1)
-                    text += this.pixelColor[i][j];
+                    text.append(this.pixelColor[i][j]);
                 else
-                    text += this.pixelColor[i][j] + " ";
+                    text.append(this.pixelColor[i][j]).append(" ");
             }
         }
-        writer.write(text);
+        writer.write(text.toString());
         writer.flush();
     }
 }
